@@ -1,0 +1,6 @@
+.logo-container img {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+  object-fit: cover;
+}
