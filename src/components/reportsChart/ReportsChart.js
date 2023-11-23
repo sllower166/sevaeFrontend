@@ -13,7 +13,7 @@ const BarsChart = ({ reportsData }) => {
       }
 
       if (ctx) {
-        const registroTypes = ["Ingreso", "Salida", "Fuera de horario"];
+        const registroTypes = ["Ingreso", "Salida", "Fuera de Horario"];
 
         const registrosCount = registroTypes.map((type) => {
           const count = reportsData.filter(
