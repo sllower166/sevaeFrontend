@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Switch, Redirect } from "react-router-dom";
+import { HashRouter as Router, Switch, Redirect } from "react-router-dom";
 import { startChecking } from "../actions/authActions";
 import { LoginScreen } from "../components/auth/LoginScreen";
 import { HomeScreen } from "../components/homeScreen/HomeScreen";
