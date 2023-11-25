@@ -21,9 +21,9 @@ export const AppRouter = () => {
   //   dispatch(startChecking());
   // }, [dispatch, checking, uid]);
 
-  if (checking) {
-    return <h1>Espere..</h1>;
-  }
+  // if (checking) {
+  //   return <h1>Espere..</h1>;
+  // }
 
   return (
     <div>
