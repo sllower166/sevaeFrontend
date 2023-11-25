@@ -17,13 +17,13 @@ export const AppRouter = () => {
   const dispatch = useDispatch();
   const { checking, uid } = useSelector((state) => state.auth);
 
-  // useEffect(() => {
-  //   dispatch(startChecking());
-  // }, [dispatch, checking, uid]);
+  useEffect(() => {
+    dispatch(startChecking());
+  }, [dispatch, checking, uid]);
 
-  // if (checking) {
-  //   return <h1>Espere..</h1>;
-  // }
+  if (checking) {
+    return <h1>Espere..</h1>;
+  }
 
   return (
     <div>
