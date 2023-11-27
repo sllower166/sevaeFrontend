@@ -9,6 +9,7 @@ import { startGenerateReport } from "../../actions/reportsActions";
 import "./reportsScreen.css";
 import BarsChart from "../reportsChart/ReportsChart";
 import MultiLineChart from "../reportsChart/MultiLineChart";
+import ExportToExcel from "../reactExport/ExportToExcel";
 
 export const ReportsScreen = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ export const ReportsScreen = () => {
   const { fechaInicio, fechaFin, selectedType } = formReportsValues;
   const { report } = useSelector((state) => state.reports);
   const reportsData = report.map((report) => report.registros).flat();
+  console.log(reportsData);
   const handleReports = (e) => {
     e.preventDefault();
     if (new Date(fechaInicio) < new Date(fechaFin)) {
@@ -71,7 +73,7 @@ export const ReportsScreen = () => {
               />
             </div>
 
-            <div className="form-group col-md-3 ">
+            <div className="form-group col-md-3">
               <label>Tipo de registro:</label>
               <select
                 className="form-control"
@@ -88,8 +90,9 @@ export const ReportsScreen = () => {
               </select>
             </div>
 
-            <div className="form-group col-md-3 mt-2">
-              <input type="submit" className="btnSubmit" value="Filtrar" />
+            <div className="form-group col-md-3">
+              <input type="submit" className="filterbtn" value="Filtrar" />
+              {reportsData.length > 0 && <ExportToExcel data={reportsData} />}
             </div>
           </div>
         </form>
