@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Select from "react-select";
 import {
   startGetStudents,
   startManualAccessStudent,
@@ -15,7 +16,16 @@ export const ManualAccessScreen = () => {
 
   const students = useSelector((state) => state.student.students);
   const { uid } = useSelector((state) => state.auth);
+  const optionsField = students.map((student) => ({
+    value: student.NUIP,
+    label: `${student.nombre} ${student.apellidos}`,
+  }));
 
+  const typeField = [
+    { value: "Ingreso", label: "Ingreso" },
+    { value: "Salida", label: "Salida" },
+    { value: "Fuera de Horario", label: "Fuera de Horario" },
+  ];
   useEffect(() => {
     dispatch(startGetStudents());
   }, [dispatch]);
@@ -28,14 +38,27 @@ export const ManualAccessScreen = () => {
 
   const { selectedStudent, selectedType, reason } = formValues;
 
+  const selectStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      background: "#c9e8f2",
+      border: "none",
+      outline: "none",
+      borderRadius: "15px",
+      fontSize: "1em",
+      boxShadow: "-1px -1px 4px #8da2a9, 1px 1px 4px #ffff",
+      color: "#101935",
+    }),
+  };
+
   const handleManualAccess = (e) => {
     const selectedStudentObj = students.find(
-      (student) => `${student.nombre} ${student.apellidos}` === selectedStudent
+      (student) => student.NUIP === selectedStudent.value
     );
     e.preventDefault();
     const data = {
       estudianteId: selectedStudentObj._id,
-      tipoAcceso: formValues.selectedType,
+      tipoAcceso: formValues.selectedType.value,
       motivo: formValues.reason,
       usuarioID: uid,
     };
@@ -51,35 +74,37 @@ export const ManualAccessScreen = () => {
         <form onSubmit={handleManualAccess} className="form-container">
           <div className="form-group">
             <label>Seleccionar Estudiante:</label>
-            <select
-              className="form-control"
+            <Select
               value={selectedStudent}
-              onChange={handleInputChange}
-              name="selectedStudent"
+              isSearchable={true}
+              maxMenuHeight={120}
+              onChange={(newValue) =>
+                handleInputChange({
+                  target: { name: "selectedStudent", value: newValue },
+                })
+              }
+              options={optionsField}
+              placeholder="Seleccionar estudiante"
+              styles={selectStyles}
+              noOptionsMessage={() => "Estudiante no encontrado"}
               required
-            >
-              <option value="">Seleccionar estudiante</option>
-              {students.map((student) => (
-                <option key={student._id} value={student.id}>
-                  {`${student.nombre} ${student.apellidos}`}
-                </option>
-              ))}
-            </select>
+            />
           </div>
           <div className="form-group">
             <label>Tipo de registro:</label>
-            <select
-              className="form-control"
+            <Select
               value={selectedType}
-              name="selectedType"
-              onChange={handleInputChange}
+              onChange={(newValue) =>
+                handleInputChange({
+                  target: { name: "selectedType", value: newValue },
+                })
+              }
+              options={typeField}
+              placeholder="Tipo de registro"
+              styles={selectStyles}
+              noOptionsMessage={() => "Tipo no encontrado"}
               required
-            >
-              <option value="">Tipo de registro</option>
-              <option value="Ingreso">Ingreso</option>
-              <option value="Salida">Salida</option>
-              <option value="Fuera de Horario">Fuera de Horario</option>
-            </select>
+            />
           </div>
 
           <div className="form-group">
