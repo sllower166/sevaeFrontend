@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Logo } from "../ui/Logo";
-import { BackImg } from "../ui/BackImg";
+import { BackImg1 } from "../ui/BackImg1";
 
 import "./studentList.css";
 import {
@@ -89,7 +89,7 @@ export const StudentList = () => {
           </thead>
           <tbody>
             {filteredStudents.length > 0 &&
-              filteredStudents.map((student) => (
+              filteredStudents.slice(0, 10).map((student) => (
                 <tr key={student._id}>
                   <td>{student.NUIP}</td>
                   <td>{student.nombre + " " + student.apellidos}</td>
@@ -116,7 +116,7 @@ export const StudentList = () => {
           </tbody>
         </table>
       </div>
-      <BackImg />
+      <BackImg1 />
     </div>
   );
 };
